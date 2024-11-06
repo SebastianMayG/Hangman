@@ -12,43 +12,51 @@
             Grid.Row="0"
             HorizontalOptions="Center"
             VerticalOptions="Center"
-            Spacing="10">
+            Spacing="5">
 
             <Label
-                x:Name="lblErrors"
-                Text="Errores: 0 de 6"
+                x:Name="lblErrores"
+                Text="{Binding Estado}"
                 HorizontalTextAlignment="Center"
                 FontAttributes="Bold"/>
 
             <Image
                 x:Name="imgGame"
-                Source="img0.jpg"
+                Source="{Binding Imagen}"
                 WidthRequest="120"/>
 
             <Label
-                x:Name="lblWord"
+                x:Name="lblPalabra"
                 Text="{Binding Spotlight}"
                 FontAttributes="Bold"
-                FontSize="40"
+                FontSize="Medium"
+                HorizontalTextAlignment="Center"/>
+
+            <Label
+                x:Name="lblMensaje"
+                Text="{Binding Mensaje}"
                 HorizontalTextAlignment="Center"/>
 
             <Button
-                x:Name="btnRestart"
-                Text="Reiniciar"/>
+                x:Name="btnReiniciar"
+                Text="Reiniciar"
+                Clicked="btnReiniciar_Clicked"/>
         </VerticalStackLayout>
 
         <FlexLayout
+            x:Name="LetrasLayout"
             Grid.Row="1"
             Wrap="Wrap"
             JustifyContent="SpaceEvenly"
-            BindableLayout.ItemsSource="{Binding Letters}">
+            BindableLayout.ItemsSource="{Binding Letras}">
 
             <BindableLayout.ItemTemplate>
                 <DataTemplate>
                     <Button
                         Text="{Binding .}"
                         HeightRequest="50"
-                        WidthRequest="50"/>
+                        WidthRequest="50"
+                        Clicked="Button_Clicked"/>
                 </DataTemplate>
             </BindableLayout.ItemTemplate>
 

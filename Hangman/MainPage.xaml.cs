@@ -4,15 +4,15 @@ namespace Hangman
 {
     public partial class MainPage : ContentPage, INotifyPropertyChanged
     {
-        List<string> secretWords = new List<string> {
+        private List<string> palabras = new List<string> {
                                     "code", "bug", "java", "script", "data",
                                     "framework", "server", "loops", "algorithm", "bit",
                                     "compile","debug","object","variable","syntax"
                                     };
 
-        List<char> userLetters = new List<char>();
-        Random random = new Random();
-        String answer;
+        private List<char> letrasUsuario = new List<char>();
+        private Random random = new Random();
+        private String respuesta;
 
         private string spotlight = "";
         public String Spotlight
@@ -25,13 +25,57 @@ namespace Hangman
             }
         }
 
-        private List<char> letters = new List<char>();
-        public List<char> Letters
+        private List<char> letras = new List<char>();
+        public List<char> Letras
         {
-            get => letters;
+            get => letras;
             set
             {
-                letters = value;
+                letras = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private string mensaje;
+        public string Mensaje
+        {
+            get => mensaje;
+            set
+            {
+                mensaje = value;
+                OnPropertyChanged();
+            }
+        }
+        
+        private String estado;
+        public String Estado
+        {
+            get => estado;
+            set
+            {
+                estado = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private string imagen;
+        public string Imagen
+        {
+            get => imagen;
+            set
+            {
+                imagen = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private int errores;
+        public int Errores
+        {
+            get => errores;
+            set
+            {
+                errores = value;
                 OnPropertyChanged();
             }
         }
@@ -40,25 +84,87 @@ namespace Hangman
         {
             InitializeComponent();
             RandomWord();
-            Letters.AddRange("qwertyuiopasdfghjklzxcvbnm".ToCharArray());
-            MaskWord(answer, userLetters);
+            Letras.AddRange("qwertyuiopasdfghjklzxcvbnm".ToCharArray());
+            EnmascararPalabra(respuesta, letrasUsuario);
+            ActualizarEstado();
             BindingContext = this;
         }
 
-        private void MaskWord(string word, List<char> letters)
+        private void EnmascararPalabra(string palabra, List<char> letras)
         {
-            var mask = word
-                .Select(x => letters.IndexOf(x) >= 0 ? x : '_')
+            var mascara = palabra
+                .Select(x => letras.IndexOf(x) >= 0 ? x : '_')
                 .ToArray();
-            Spotlight = string.Join(" ", mask);
+            Spotlight = string.Join(" ", mascara);
         }
 
         public String RandomWord()
         {
-            int randomIndex = random.Next(0, secretWords.Count);
-            return answer = secretWords[randomIndex];
+            int randomIndex = random.Next(0, palabras.Count);
+            return respuesta = palabras[randomIndex];
         }
 
-    }
+        private void Button_Clicked(object sender, EventArgs e)
+        {
+            Button boton = (Button)sender;
+            char letra = boton.Text[0];
+            boton.IsEnabled = false;
+            ManejarLetras(letra);
+        }
 
+        private void ManejarLetras(char letra)
+        {
+            if(letrasUsuario.IndexOf(letra) == -1)
+            {
+                letrasUsuario.Add(letra);
+            }
+            if(respuesta.IndexOf(letra) >= 0)
+            {
+                EnmascararPalabra(respuesta, letrasUsuario);
+                RevisarSiGano();
+            }
+            else
+            {
+                errores++;
+                ActualizarEstado();
+            }
+        }
+
+        private void RevisarSiGano()
+        {
+            if(Spotlight.Replace(" ", "") == respuesta)
+            {
+                Mensaje = "Ganaste!";
+            }
+        }
+
+        private void ActualizarEstado()
+        {
+            Estado = $"Errores: {errores} de 6";
+            Imagen = $"img{errores}.jpg";
+
+            if(errores == 6)
+            {
+                Mensaje = "Perdiste!";
+            }
+        }
+
+        private void btnReiniciar_Clicked(object sender, EventArgs e)
+        {
+            letrasUsuario.Clear();
+            errores = 0;
+            Mensaje = string.Empty;
+            respuesta = RandomWord();
+            EnmascararPalabra(respuesta, letrasUsuario);
+            ActualizarEstado();
+
+            foreach (var child in LetrasLayout.Children)
+            {
+                if (child is Button button)
+                {
+                    button.IsEnabled = true;
+                }
+            }
+        }
+    }
 }

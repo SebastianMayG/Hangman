@@ -30,7 +30,7 @@
     <AppXManifest Include="C:\Users\Lenovo\source\repos\Hangman\Hangman\bin\Debug\net8.0-windows10.0.19041.0\win10-x64\AppxManifest.xml">
       <PackagePath>AppxManifest.xml</PackagePath>
       <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
-      <Modified>2024-11-05T22:50:38.547</Modified>
+      <Modified>2024-11-06T01:26:46.223</Modified>
     </AppXManifest>
   </ItemGroup>
   <ItemGroup>
@@ -44,11 +44,11 @@
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\Lenovo\source\repos\Hangman\Hangman\bin\Debug\net8.0-windows10.0.19041.0\win10-x64\Hangman.dll">
       <PackagePath>Hangman.dll</PackagePath>
-      <Modified>2024-11-05T22:50:37.379</Modified>
+      <Modified>2024-11-06T01:26:45.856</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\Lenovo\source\repos\Hangman\Hangman\obj\Debug\net8.0-windows10.0.19041.0\win10-x64\apphost.exe">
       <PackagePath>Hangman.exe</PackagePath>
-      <Modified>2024-11-05T22:50:37.397</Modified>
+      <Modified>2024-11-06T01:26:45.861</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\Lenovo\source\repos\Hangman\Hangman\Resources\Raw\AboutAssets.txt">
       <PackagePath>AboutAssets.txt</PackagePath>
